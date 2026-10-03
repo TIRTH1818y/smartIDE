@@ -1,0 +1,1057 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>SmartCode Platform | Professional Assessment Environment</title>
+  <!-- Google Fonts: Inter & JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css"/>
+</head>
+<body class="dark-theme">
+  <div id="app" class="app-container">
+    
+    <!-- LEFT SIDEBAR APPLICATION SHELL -->
+    <aside class="app-sidebar" id="appSidebar">
+      <!-- Sidebar Brand Header -->
+      <div class="sidebar-header">
+        <div class="brand-box">
+          <div class="brand-logo">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+          </div>
+          <span class="brand-name">SmartCode</span>
+        </div>
+        <button class="sidebar-toggle-btn" onclick="toggleSidebar()" title="Toggle Sidebar (Ctrl+B)">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"></polyline></svg>
+        </button>
+      </div>
+
+      <!-- Host Navigation Items -->
+      <div class="sidebar-menu-group" id="hostSidebarNav">
+        <span class="menu-label">WORKSPACE</span>
+        <nav class="sidebar-nav">
+          <a class="nav-item active" id="snav-host-overview" onclick="navigateTo('host-overview')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            <span class="nav-text">Overview</span>
+          </a>
+          <a class="nav-item" id="snav-host-problems" onclick="navigateTo('host-problems')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line></svg>
+            <span class="nav-text">Problems</span>
+            <span class="nav-badge" id="snavProblemCount">0</span>
+          </a>
+          <a class="nav-item" id="snav-host-developers" onclick="navigateTo('host-developers')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            <span class="nav-text">Developers</span>
+          </a>
+          <a class="nav-item" id="snav-host-assignments" onclick="navigateTo('host-assignments')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect></svg>
+            <span class="nav-text">Assignments</span>
+          </a>
+          <a class="nav-item" id="snav-host-submissions" onclick="navigateTo('host-submissions')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg>
+            <span class="nav-text">Submissions</span>
+            <span class="nav-badge warning" id="snavPendingCount">0</span>
+          </a>
+        </nav>
+
+        <span class="menu-label" style="margin-top: 14px;">INSIGHTS</span>
+        <nav class="sidebar-nav">
+          <a class="nav-item" onclick="navigateTo('host-submissions')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+            <span class="nav-text">Analytics</span>
+          </a>
+          <a class="nav-item" onclick="navigateTo('host-overview')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polygon points="12 6 12 12 16 14"></polygon></svg>
+            <span class="nav-text">Performance</span>
+          </a>
+        </nav>
+
+        <span class="menu-label" style="margin-top: 14px;">SYSTEM</span>
+        <nav class="sidebar-nav">
+          <a class="nav-item" onclick="showModal('shortcutModal')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+            <span class="nav-text">Settings</span>
+          </a>
+          <a class="nav-item" onclick="showModal('shortcutModal')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+            <span class="nav-text">Help</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Developer Navigation Items -->
+      <div class="sidebar-menu-group" id="devSidebarNav" style="display:none;">
+        <span class="menu-label">DEVELOPER WORKSPACE</span>
+        <nav class="sidebar-nav">
+          <a class="nav-item" id="snav-dev-overview" onclick="navigateTo('dev-overview')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"></rect><rect x="14" y="3" width="7" height="7"></rect><rect x="14" y="14" width="7" height="7"></rect><rect x="3" y="14" width="7" height="7"></rect></svg>
+            <span class="nav-text">Overview</span>
+          </a>
+          <a class="nav-item" id="snav-dev-challenges" onclick="navigateTo('dev-challenges')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+            <span class="nav-text">My Challenges</span>
+          </a>
+          <a class="nav-item" id="snav-dev-results" onclick="navigateTo('dev-results')">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            <span class="nav-text">Results & Feedback</span>
+          </a>
+        </nav>
+      </div>
+
+      <!-- Sidebar User Profile Footer -->
+      <div class="sidebar-user-footer">
+        <div class="sidebar-user-info" onclick="openAuthModal()">
+          <span class="avatar" id="sbUserAvatar">H</span>
+          <div class="user-details">
+            <span class="user-name" id="sbUserName">Host Account</span>
+            <span class="user-role-badge" id="sbUserRole">Host</span>
+          </div>
+        </div>
+        <button class="logout-icon-btn" onclick="logout()" title="Logout">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"></path><polyline points="16 17 21 12 16 7"></polyline><line x1="21" y1="12" x2="9" y2="12"></line></svg>
+        </button>
+      </div>
+    </aside>
+
+    <!-- RIGHT MAIN CONTENT CONTAINER -->
+    <div class="app-main-wrapper">
+      
+      <!-- TOP NAVIGATION BAR -->
+      <header class="top-nav">
+        <!-- Global Search / Command Bar Trigger -->
+        <div class="search-trigger-box" onclick="openCommandPalette()">
+          <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <span class="search-placeholder">Search problems, developers...</span>
+          <kbd class="kbd-shortcut">Ctrl K</kbd>
+        </div>
+
+        <div class="top-nav-controls">
+          <!-- API Health Indicator -->
+          <div class="health-status-badge" id="healthStatusBadge">
+            <span class="dot-live"></span>
+            <span id="healthText">API Connected</span>
+          </div>
+
+          <!-- Role Switcher Segmented Control -->
+          <div class="segmented-control">
+            <button class="segment-btn active" id="segHostBtn" onclick="switchRole('host')">Host</button>
+            <button class="segment-btn" id="segDevBtn" onclick="switchRole('developer')">Developer</button>
+          </div>
+
+          <!-- Quick Action Button -->
+          <div class="quick-action-dropdown">
+            <button class="btn btn-primary btn-sm" onclick="showModal('createProblemModal')">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg>
+              + New
+            </button>
+          </div>
+
+          <!-- Notification Bell -->
+          <div class="notification-wrapper">
+            <button class="icon-nav-btn" onclick="toggleNotificationDrawer()" title="Notifications">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path><path d="M13.73 21a2 2 0 0 1-3.46 0"></path></svg>
+              <span class="unread-dot" id="notiUnreadDot"></span>
+            </button>
+
+            <!-- Compact Notification Panel Dropdown -->
+            <div class="notification-dropdown" id="notificationDropdown" style="display: none;">
+              <div class="noti-header">
+                <span>Notifications</span>
+                <button class="btn-text-link" onclick="markAllNotificationsRead()">Mark all as read</button>
+              </div>
+              <div class="noti-list" id="notificationList">
+                <div class="noti-item unread">
+                  <div class="noti-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
+                  <div class="noti-body">
+                    <div class="noti-title">New Solution Submitted</div>
+                    <div class="noti-desc">Rahul Shah submitted Palindrome</div>
+                    <div class="noti-time">2m ago</div>
+                  </div>
+                </div>
+                <div class="noti-item">
+                  <div class="noti-icon"><svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></div>
+                  <div class="noti-body">
+                    <div class="noti-title">Evaluation Completed</div>
+                    <div class="noti-desc">Amit Patel scored 100% on Two Sum</div>
+                    <div class="noti-time">1h ago</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Keyboard Shortcuts Help Button -->
+          <button class="icon-nav-btn" onclick="showModal('shortcutModal')" title="Keyboard Shortcuts (?)">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3"></path><line x1="12" y1="17" x2="12.01" y2="17"></line></svg>
+          </button>
+        </div>
+      </header>
+
+      <!-- VIEW PANELS CONTAINER -->
+      <main class="content-body">
+        
+        <!-- PAGE 1: HOST OVERVIEW DASHBOARD -->
+        <section id="page-host-overview" class="page-panel active">
+          <!-- Compact Dashboard Header -->
+          <div class="page-header compact-dash-header">
+            <div>
+              <h1 class="page-title">Good morning, <span id="hostGreetingName">Moj Tirth</span></h1>
+              <p class="page-subtitle">Platform overview and pending work.</p>
+            </div>
+            <div class="page-actions">
+              <button class="btn btn-secondary btn-sm" onclick="openAssignModalForProblem()">Assign Challenge</button>
+              <button class="btn btn-primary btn-sm" onclick="showModal('createProblemModal')">+ Create Problem</button>
+            </div>
+          </div>
+
+          <!-- 5 Compact Metric Widgets -->
+          <div class="compact-metrics-grid">
+            <div class="metric-card-sm">
+              <div class="metric-sm-head">
+                <span class="metric-sm-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><polyline points="10 13 8 15 10 17"></polyline><polyline points="14 13 16 15 14 17"></polyline></svg></span>
+                <span class="metric-sm-label">Problems</span>
+              </div>
+              <div class="metric-sm-val" id="hostStatProblems">0</div>
+              <div class="metric-sm-trend" id="hostStatProblemsTrend">+0 this month</div>
+            </div>
+
+            <div class="metric-card-sm">
+              <div class="metric-sm-head">
+                <span class="metric-sm-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"></path><rect x="8" y="2" width="8" height="4" rx="1" ry="1"></rect><line x1="9" y1="12" x2="15" y2="12"></line><line x1="9" y1="16" x2="13" y2="16"></line></svg></span>
+                <span class="metric-sm-label">Assignments</span>
+              </div>
+              <div class="metric-sm-val" id="hostStatDevs">0</div>
+              <div class="metric-sm-trend success" id="hostStatDevsTrend">0 active</div>
+            </div>
+
+            <div class="metric-card-sm">
+              <div class="metric-sm-head">
+                <span class="metric-sm-icon"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="18" cy="18" r="3"></circle><circle cx="6" cy="6" r="3"></circle><path d="M13 6h3a2 2 0 0 1 2 2v7"></path><line x1="6" y1="9" x2="6" y2="21"></line></svg></span>
+                <span class="metric-sm-label">Submissions</span>
+              </div>
+              <div class="metric-sm-val" id="hostStatSubmitted">0</div>
+              <div class="metric-sm-trend" id="hostStatSubmittedTrend">0 pending review</div>
+            </div>
+
+            <div class="metric-card-sm warning-border">
+              <div class="metric-sm-head">
+                <span class="metric-sm-icon warning"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg></span>
+                <span class="metric-sm-label">Pending Reviews</span>
+              </div>
+              <div class="metric-sm-val warning" id="hostStatPending">0</div>
+              <div class="metric-sm-trend warning" id="hostStatPendingTrend">Needs attention</div>
+            </div>
+
+            <div class="metric-card-sm">
+              <div class="metric-sm-head">
+                <span class="metric-sm-icon info"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg></span>
+                <span class="metric-sm-label">Average Score</span>
+              </div>
+              <div class="metric-sm-val" id="hostStatAvgScore">0%</div>
+              <div class="metric-sm-trend info" id="hostStatAvgScoreTrend">Overall average</div>
+            </div>
+          </div>
+
+          <!-- 12-COLUMN DASHBOARD GRID -->
+          <div class="dash-grid-12">
+
+            <!-- ROW 1: Pending Reviews (8 cols) & Recent Activity Feed (4 cols) -->
+            <div class="grid-col-8 panel-card">
+              <div class="card-header border-b">
+                <div class="card-title-box">
+                  <h3>Pending Reviews</h3>
+                  <span class="chip-badge warning" id="pendingReviewBadge">0 Pending</span>
+                </div>
+                <div class="card-header-actions">
+                  <button class="btn-text-link" onclick="loadHostDashboard()">Refresh</button>
+                  <button class="btn-text-link" onclick="navigateTo('host-submissions')">View all →</button>
+                </div>
+              </div>
+              <div class="table-wrapper">
+                <table class="data-table compact-table">
+                  <thead>
+                    <tr>
+                      <th>Developer</th>
+                      <th>Problem</th>
+                      <th>Score</th>
+                      <th>Submitted</th>
+                      <th>Action</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dashPendingTableBody">
+                    <tr><td colspan="5" class="empty-td">Loading pending reviews...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="grid-col-4 panel-card">
+              <div class="card-header border-b">
+                <h3>Recent Activity</h3>
+                <span class="text-muted-sm">Real-time</span>
+              </div>
+              <div class="activity-timeline" id="activityFeedList">
+                <div class="timeline-item">
+                  <div class="timeline-dot"></div>
+                  <div class="timeline-content">
+                    <div class="timeline-text">System operational cleanly.</div>
+                    <div class="timeline-time">Just now</div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ROW 2: Submission Analytics (7 cols) & Challenge Status (5 cols) -->
+            <div class="grid-col-7 panel-card">
+              <div class="card-header border-b">
+                <div>
+                  <h3>Submission Activity</h3>
+                  <span class="text-muted-sm">Candidate submission patterns & evaluated tests</span>
+                </div>
+                <div class="segmented-control-sm">
+                  <button class="seg-sm-btn active" onclick="switchAnalyticsPeriod('7D')">7D</button>
+                  <button class="seg-sm-btn" onclick="switchAnalyticsPeriod('30D')">30D</button>
+                  <button class="seg-sm-btn" onclick="switchAnalyticsPeriod('90D')">90D</button>
+                </div>
+              </div>
+              
+              <div class="analytics-submetrics">
+                <div class="submetric">
+                  <span class="submetric-val" id="analyticsTotalSubs">0</span>
+                  <span class="submetric-lbl">Submissions</span>
+                </div>
+                <div class="submetric">
+                  <span class="submetric-val success" id="analyticsPassRate">0%</span>
+                  <span class="submetric-lbl">Tests Passed</span>
+                </div>
+                <div class="submetric">
+                  <span class="submetric-val info" id="analyticsEvaluated">0</span>
+                  <span class="submetric-lbl">Evaluated</span>
+                </div>
+              </div>
+
+              <div class="chart-canvas-container">
+                <canvas id="analyticsCanvas" height="160"></canvas>
+              </div>
+            </div>
+
+            <div class="grid-col-5 panel-card">
+              <div class="card-header border-b">
+                <h3>Challenge Status</h3>
+                <span class="text-muted-sm">Total lifecycle</span>
+              </div>
+              
+              <div class="challenge-status-body">
+                <!-- Stacked Progress Bar -->
+                <div class="stacked-progress-bar" id="challengeStatusStackedBar">
+                  <div class="bar-seg seg-assigned" style="width: 20%;" title="Assigned"></div>
+                  <div class="bar-seg seg-opened" style="width: 20%;" title="In Progress"></div>
+                  <div class="bar-seg seg-submitted" style="width: 20%;" title="Submitted"></div>
+                  <div class="bar-seg seg-evaluated" style="width: 30%;" title="Evaluated"></div>
+                  <div class="bar-seg seg-expired" style="width: 10%;" title="Expired"></div>
+                </div>
+
+                <!-- Breakdown List Items -->
+                <div class="status-legend-list">
+                  <div class="legend-row">
+                    <span class="legend-dot seg-assigned"></span>
+                    <span class="legend-label">Assigned</span>
+                    <span class="legend-value" id="statusCountAssigned">0</span>
+                  </div>
+                  <div class="legend-row">
+                    <span class="legend-dot seg-opened"></span>
+                    <span class="legend-label">In Progress</span>
+                    <span class="legend-value" id="statusCountOpened">0</span>
+                  </div>
+                  <div class="legend-row">
+                    <span class="legend-dot seg-submitted"></span>
+                    <span class="legend-label">Submitted</span>
+                    <span class="legend-value warning" id="statusCountSubmitted">0</span>
+                  </div>
+                  <div class="legend-row">
+                    <span class="legend-dot seg-evaluated"></span>
+                    <span class="legend-label">Evaluated</span>
+                    <span class="legend-value success" id="statusCountEvaluated">0</span>
+                  </div>
+                  <div class="legend-row">
+                    <span class="legend-dot seg-expired"></span>
+                    <span class="legend-label">Expired</span>
+                    <span class="legend-value muted" id="statusCountExpired">0</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- ROW 3: Recent Problems (7 cols) & Recent Developers (5 cols) -->
+            <div class="grid-col-7 panel-card">
+              <div class="card-header border-b">
+                <h3>Recent Problems</h3>
+                <button class="btn-text-link" onclick="navigateTo('host-problems')">View repository →</button>
+              </div>
+              <div class="table-wrapper">
+                <table class="data-table compact-table">
+                  <thead>
+                    <tr>
+                      <th>Problem</th>
+                      <th>Difficulty</th>
+                      <th>Assigned</th>
+                      <th>Status</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dashRecentProblemsBody">
+                    <tr><td colspan="4" class="empty-td">Loading recent problems...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <div class="grid-col-5 panel-card">
+              <div class="card-header border-b">
+                <h3>Recent Developers</h3>
+                <button class="btn-text-link" onclick="navigateTo('host-developers')">Manage developers →</button>
+              </div>
+              <div class="table-wrapper">
+                <table class="data-table compact-table">
+                  <thead>
+                    <tr>
+                      <th>Developer</th>
+                      <th>Status</th>
+                      <th>Assigned</th>
+                      <th>Joined</th>
+                    </tr>
+                  </thead>
+                  <tbody id="dashRecentDevelopersBody">
+                    <tr><td colspan="4" class="empty-td">Loading developers...</td></tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- ROW 4: System Status & Quick Actions Bar (12 cols) -->
+            <div class="grid-col-12 system-actions-bar">
+              <div class="system-status-pills">
+                <div class="status-pill"><span class="pill-dot live"></span> API Connected</div>
+                <div class="status-pill"><span class="pill-dot live"></span> MongoDB Atlas</div>
+                <div class="status-pill"><span class="pill-dot live"></span> Code Runner Ready</div>
+                <div class="status-pill"><span class="pill-dot live"></span> Auth JWT Active</div>
+              </div>
+
+              <div class="quick-actions-flex">
+                <button class="btn btn-xs btn-outline" onclick="showModal('createProblemModal')">+ Create Problem</button>
+                <button class="btn btn-xs btn-outline" onclick="openAssignModalForProblem()">Assign Challenge</button>
+                <button class="btn btn-xs btn-outline" onclick="navigateTo('host-submissions')">View Submissions</button>
+                <button class="btn btn-xs btn-outline" onclick="navigateTo('host-developers')">Manage Developers</button>
+              </div>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- PAGE 2: HOST PROBLEMS REPOSITORY PAGE -->
+        <section id="page-host-problems" class="page-panel">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Coding Problems Repository</h1>
+              <p class="page-subtitle">Manage coding specifications, test cases, and difficulty parameters.</p>
+            </div>
+            <div class="page-actions">
+              <button class="btn btn-primary" onclick="showModal('createProblemModal')">+ New Problem</button>
+            </div>
+          </div>
+
+          <div class="table-toolbar">
+            <div class="filter-tabs">
+              <button class="filter-tab active" onclick="filterProblemsTab('all')">All Problems</button>
+              <button class="filter-tab" onclick="filterProblemsTab('easy')">Easy</button>
+              <button class="filter-tab" onclick="filterProblemsTab('medium')">Medium</button>
+              <button class="filter-tab" onclick="filterProblemsTab('hard')">Hard</button>
+            </div>
+            <div class="table-search">
+              <input type="text" id="problemSearchInput" class="form-input form-input-sm" placeholder="Filter problems..." oninput="onSearchProblems()"/>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Title</th>
+                    <th>Difficulty</th>
+                    <th>Supported Languages</th>
+                    <th>Max Marks</th>
+                    <th>Test Cases</th>
+                    <th>Created</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="hostProblemsTableBody">
+                  <tr><td colspan="7" class="empty-td">Loading problems...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- PAGE 3: HOST DEVELOPERS LIST PAGE -->
+        <section id="page-host-developers" class="page-panel">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Registered Developers</h1>
+              <p class="page-subtitle">Candidate profiles, assignment metrics, and performance records.</p>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Developer Name</th>
+                    <th>Email Address</th>
+                    <th>Registered Date</th>
+                    <th>Role</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="hostDevelopersTableBody">
+                  <tr><td colspan="5" class="empty-td">Loading developers list...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- PAGE 4: HOST ASSIGNMENTS PAGE -->
+        <section id="page-host-assignments" class="page-panel">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Challenge Assignments</h1>
+              <p class="page-subtitle">Manage candidate assignments, security tokens, and active challenge links.</p>
+            </div>
+            <div class="page-actions">
+              <button class="btn btn-primary" onclick="openAssignModalForProblem()">+ Assign Challenge</button>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Problem Title</th>
+                    <th>Candidate</th>
+                    <th>Status</th>
+                    <th>Unique Challenge Link</th>
+                    <th>Expires At</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="hostAssignmentsTableBody">
+                  <tr><td colspan="6" class="empty-td">Loading active assignments...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- PAGE 5: HOST SUBMISSIONS & CODE REVIEW PAGE -->
+        <section id="page-host-submissions" class="page-panel">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Submissions & Code Evaluation</h1>
+              <p class="page-subtitle">Review candidate code submissions, inspect automatic test scores, and award final grades.</p>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Developer</th>
+                    <th>Problem</th>
+                    <th>Language</th>
+                    <th>Auto Score</th>
+                    <th>Final Score</th>
+                    <th>Status</th>
+                    <th>Submitted At</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="hostSubmissionsTableBody">
+                  <tr><td colspan="8" class="empty-td">Loading submissions...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- PAGE 6: DEVELOPER OVERVIEW DASHBOARD -->
+        <section id="page-dev-overview" class="page-panel">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Welcome back, <span id="devGreetingName">Developer</span></h1>
+              <p class="page-subtitle">Your active coding assessments, workspace environment, and performance summary.</p>
+            </div>
+          </div>
+
+          <div class="metrics-grid">
+            <div class="metric-card">
+              <span class="metric-label">Assigned Challenges</span>
+              <span class="metric-value" id="devStatAssigned">0</span>
+              <span class="metric-foot">Total received</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Pending Submissions</span>
+              <span class="metric-value" id="devStatPending">0</span>
+              <span class="metric-foot warning">Requires solution</span>
+            </div>
+            <div class="metric-card">
+              <span class="metric-label">Evaluated Solutions</span>
+              <span class="metric-value" id="devStatEvaluated">0</span>
+              <span class="metric-foot">Graded by host</span>
+            </div>
+            <div class="metric-card highlight">
+              <span class="metric-label">Average Score</span>
+              <span class="metric-value" id="devStatAvgScore">0 / 100</span>
+              <span class="metric-foot">Overall performance</span>
+            </div>
+          </div>
+
+          <!-- Active Challenges Table -->
+          <div class="panel-card margin-top">
+            <div class="card-header">
+              <h3>My Active Assessments</h3>
+            </div>
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Problem Title</th>
+                    <th>Host</th>
+                    <th>Difficulty</th>
+                    <th>Status</th>
+                    <th>Expires At</th>
+                    <th>Action</th>
+                  </tr>
+                </thead>
+                <tbody id="devOverviewTableBody">
+                  <tr><td colspan="6" class="empty-td">Loading assigned challenges...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+        <!-- PAGE 7: DEVELOPER CODING CHALLENGE ENVIRONMENT (IDE) -->
+        <section id="page-dev-challenges" class="page-panel">
+          <div class="challenge-env-bar">
+            <div class="challenge-title-area">
+              <span class="badge badge-easy" id="ideDiffBadge">Easy</span>
+              <h2 class="challenge-heading" id="ideTitle">Select an Assigned Challenge</h2>
+            </div>
+            <div class="challenge-actions-area">
+              <div class="token-quick-input">
+                <input type="text" id="ideTokenInput" class="form-input form-input-sm" placeholder="Paste Token / URL..."/>
+                <button class="btn btn-secondary btn-sm" onclick="openChallengeByTokenInput()">Open</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- Two-Column Professional IDE Workspace -->
+          <div class="ide-split-container">
+            <!-- Left Column: Problem Specifications -->
+            <div class="ide-problem-pane">
+              <div class="pane-header">
+                <span>Problem Description</span>
+              </div>
+              <div class="pane-content" id="ideProblemContent">
+                <div class="empty-state-box">
+                  <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+                  <h4>No Challenge Opened</h4>
+                  <p>Click "Open IDE" from your challenges list or paste a unique token above to load the problem statement and code editor.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Right Column: Code Editor & Console Drawer -->
+            <div class="ide-editor-pane">
+              <div class="pane-header editor-toolbar">
+                <div class="lang-picker">
+                  <label>Language:</label>
+                  <select id="ideLangSelect" class="form-select form-select-sm" onchange="onLangChange()">
+                    <option value="javascript">JavaScript (Node.js)</option>
+                    <option value="python">Python 3</option>
+                    <option value="java">Java 21</option>
+                    <option value="cpp">C++20</option>
+                  </select>
+                </div>
+                <div class="editor-buttons">
+                  <button class="btn btn-sm btn-secondary" onclick="runCodeLocalTest()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                    Run Test (Ctrl+Shift+Enter)
+                  </button>
+                  <button class="btn btn-sm btn-primary" onclick="confirmSubmitSolution()">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+                    Submit Solution (Ctrl+Enter)
+                  </button>
+                </div>
+              </div>
+
+              <!-- Monospaced Code Textarea with Line Numbers -->
+              <div class="code-editor-wrapper">
+                <div class="line-numbers" id="lineNumbersCol">1</div>
+                <textarea id="ideCodeTextarea" class="code-editor-input" spellcheck="false" placeholder="// Write solution code here..."></textarea>
+              </div>
+
+              <!-- Console Output Drawer -->
+              <div class="console-drawer" id="consoleDrawer">
+                <div class="drawer-header">
+                  <div class="drawer-tabs">
+                    <span class="drawer-tab active">Test Results Output</span>
+                  </div>
+                  <span class="status-chip chip-neutral" id="ideStatusChip">Ready</span>
+                </div>
+                <div class="drawer-body" id="consoleOutputBody">
+                  <p class="term-muted">Press "Run Test" or "Submit Solution" to evaluate code test cases.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <!-- PAGE 8: DEVELOPER RESULTS & FEEDBACK PAGE -->
+        <section id="page-dev-results" class="page-panel">
+          <div class="page-header">
+            <div>
+              <h1 class="page-title">Results & Host Feedback</h1>
+              <p class="page-subtitle">Inspect evaluated scores, automatic test summaries, and host review feedback.</p>
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="table-wrapper">
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>Problem Title</th>
+                    <th>Host</th>
+                    <th>Status</th>
+                    <th>Auto Score</th>
+                    <th>Final Awarded Grade</th>
+                    <th>Host Feedback</th>
+                  </tr>
+                </thead>
+                <tbody id="devResultsTableBody">
+                  <tr><td colspan="6" class="empty-td">Loading results...</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+
+      </main>
+    </div>
+
+    <!-- GLOBAL MODALS -->
+
+    <!-- MODAL 1: COMMAND PALETTE SEARCH (Ctrl+K) -->
+    <div id="cmdPaletteModal" class="modal-overlay">
+      <div class="cmd-palette-box">
+        <div class="cmd-header">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="cmdInput" class="cmd-input" placeholder="Type a command or search problems, developers..." oninput="onCmdSearchInput()"/>
+          <kbd class="kbd-sm">ESC</kbd>
+        </div>
+        <div class="cmd-body" id="cmdResultsList">
+          <div class="cmd-group-title">QUICK NAVIGATION</div>
+          <div class="cmd-item" onclick="execCmdNav('host-problems')">📄 Problems Repository</div>
+          <div class="cmd-item" onclick="execCmdNav('host-assignments')">🔗 Active Assignments</div>
+          <div class="cmd-item" onclick="execCmdNav('host-submissions')">📊 Submissions & Evaluation</div>
+        </div>
+        <div class="cmd-footer">
+          <span>Use <kbd class="kbd-sm">↑</kbd> <kbd class="kbd-sm">↓</kbd> to navigate, <kbd class="kbd-sm">↵</kbd> to select</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL 2: CREATE PROBLEM EDITOR -->
+    <div id="createProblemModal" class="modal-overlay">
+      <div class="modal-card modal-lg">
+        <div class="modal-header">
+          <h3>Create New Coding Problem</h3>
+          <button class="modal-close" onclick="hideModal('createProblemModal')">&times;</button>
+        </div>
+        <form id="createProblemForm" onsubmit="handleCreateProblemSubmit(event)">
+          <div class="modal-body">
+            <div class="form-row">
+              <div class="form-group flex-2">
+                <label>Problem Title *</label>
+                <input type="text" id="pTitle" class="form-input" placeholder="e.g., Reverse Linked List" required/>
+              </div>
+              <div class="form-group flex-1">
+                <label>Difficulty *</label>
+                <select id="pDifficulty" class="form-select">
+                  <option value="easy">Easy</option>
+                  <option value="medium">Medium</option>
+                  <option value="hard">Hard</option>
+                </select>
+              </div>
+              <div class="form-group flex-1">
+                <label>Max Marks</label>
+                <input type="number" id="pMaxMarks" class="form-input" value="100" min="1"/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Problem Statement / Description *</label>
+              <textarea id="pDesc" class="form-textarea" rows="4" placeholder="Describe the problem, input specifications, and expected behavior..." required></textarea>
+            </div>
+
+            <div class="form-row">
+              <div class="form-group">
+                <label>Input Format</label>
+                <input type="text" id="pInputFormat" class="form-input" placeholder="e.g., Array of integers"/>
+              </div>
+              <div class="form-group">
+                <label>Output Format</label>
+                <input type="text" id="pOutputFormat" class="form-input" placeholder="e.g., Target indices"/>
+              </div>
+              <div class="form-group">
+                <label>Time Limit (sec)</label>
+                <input type="number" id="pTimeLimit" class="form-input" value="2" min="1"/>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label>Constraints</label>
+              <input type="text" id="pConstraints" class="form-input" placeholder="e.g., 1 <= N <= 10000"/>
+            </div>
+
+            <div class="form-group">
+              <div class="label-row">
+                <label>Test Cases (Input | Expected Output)</label>
+                <button type="button" class="btn btn-xs btn-outline" onclick="addTestCaseRow()">+ Add Test Case</button>
+              </div>
+              <div id="testCasesContainer" class="tc-container">
+                <div class="tc-row">
+                  <input type="text" class="form-input tc-in" placeholder="Input sample" required/>
+                  <input type="text" class="form-input tc-out" placeholder="Expected output" required/>
+                  <label class="check-inline"><input type="checkbox" class="tc-hid"/> Hidden</label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="hideModal('createProblemModal')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Save Problem</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL 3: ASSIGN PROBLEM MODAL -->
+    <div id="assignModal" class="modal-overlay">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>Assign Challenge to Developer</h3>
+          <button class="modal-close" onclick="hideModal('assignModal')">&times;</button>
+        </div>
+        <form id="assignForm" onsubmit="handleAssignSubmit(event)">
+          <div class="modal-body">
+            <div class="form-group">
+              <label>Select Problem *</label>
+              <select id="assignProblemSelect" class="form-select" required>
+                <option value="">Loading problems...</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Select Registered Candidate *</label>
+              <select id="assignDeveloperSelect" class="form-select" required>
+                <option value="">Loading developers...</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label>Expiration Deadline *</label>
+              <input type="datetime-local" id="assignExpiresAt" class="form-input" required/>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="hideModal('assignModal')">Cancel</button>
+            <button type="submit" class="btn btn-primary">Generate Challenge Link</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL 4: INSTANT CHALLENGE LINK CREATED -->
+    <div id="challengeCreatedModal" class="modal-overlay">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>🎉 Challenge Assigned Successfully</h3>
+          <button class="modal-close" onclick="hideModal('challengeCreatedModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+          <p class="subtext">The unique challenge link has been generated. Share this URL directly with your candidate.</p>
+          
+          <div class="created-url-box">
+            <label>Unique Challenge URL:</label>
+            <div class="url-input-group">
+              <input type="text" id="createdLinkInput" class="form-input link-font" readonly/>
+              <button class="btn btn-primary" onclick="copyCreatedLink()">Copy Link</button>
+            </div>
+          </div>
+
+          <div class="token-info-row">
+            <span>Token:</span>
+            <code id="createdTokenVal">...</code>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" onclick="hideModal('challengeCreatedModal')">Done</button>
+          <button type="button" class="btn btn-success" onclick="testLinkAsDeveloper()">Test as Developer 🚀</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL 5: HOST EVALUATION REVIEW -->
+    <div id="evaluateModal" class="modal-overlay">
+      <div class="modal-card modal-lg">
+        <div class="modal-header">
+          <h3>Code Evaluation & Grading</h3>
+          <button class="modal-close" onclick="hideModal('evaluateModal')">&times;</button>
+        </div>
+        <form id="evaluateForm" onsubmit="handleEvaluateSubmit(event)">
+          <input type="hidden" id="evalSubId"/>
+          <div class="modal-body">
+            <div class="eval-split-grid">
+              <div class="eval-code-pane">
+                <label>Submitted Solution Code:</label>
+                <pre class="code-preview-block"><code id="evalCodeBlock">Loading code...</code></pre>
+              </div>
+              <div class="eval-controls-pane">
+                <div class="eval-info-box" id="evalInfoBox"></div>
+                <div class="form-group">
+                  <label>Final Score (Max: <span id="evalMaxMarksLbl">100</span>) *</label>
+                  <input type="number" id="evalFinalMarksInput" class="form-input" min="0" required/>
+                </div>
+                <div class="form-group">
+                  <label>Host Feedback Comments</label>
+                  <textarea id="evalFeedbackText" class="form-textarea" rows="4" placeholder="Write feedback comments for the candidate..."></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" onclick="hideModal('evaluateModal')">Cancel</button>
+            <button type="submit" class="btn btn-success">Save Grade & Feedback</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- MODAL 6: DEVELOPER FEEDBACK VIEW -->
+    <div id="viewFeedbackModal" class="modal-overlay">
+      <div class="modal-card">
+        <div class="modal-header">
+          <h3>Evaluation Marks & Host Feedback</h3>
+          <button class="modal-close" onclick="hideModal('viewFeedbackModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="feedback-banner">
+            <span class="fb-label">Final Awarded Grade:</span>
+            <span class="fb-score" id="viewScoreVal">0 / 100</span>
+          </div>
+
+          <div class="feedback-card">
+            <label>Host Comments:</label>
+            <p id="viewFeedbackTextVal" class="fb-body">No feedback comments provided.</p>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" onclick="hideModal('viewFeedbackModal')">Close</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL 7: KEYBOARD SHORTCUTS HELP MODAL -->
+    <div id="shortcutModal" class="modal-overlay">
+      <div class="modal-card modal-sm">
+        <div class="modal-header">
+          <h3>Keyboard Shortcuts</h3>
+          <button class="modal-close" onclick="hideModal('shortcutModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="shortcut-list">
+            <div class="sc-row"><span>Global Search / Commands</span><kbd class="kbd-sm">Ctrl K</kbd></div>
+            <div class="sc-row"><span>Submit Code in IDE</span><kbd class="kbd-sm">Ctrl Enter</kbd></div>
+            <div class="sc-row"><span>Run Test Case in IDE</span><kbd class="kbd-sm">Ctrl Shift Enter</kbd></div>
+            <div class="sc-row"><span>Toggle Sidebar</span><kbd class="kbd-sm">Ctrl B</kbd></div>
+            <div class="sc-row"><span>Close Modal / Esc</span><kbd class="kbd-sm">ESC</kbd></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- MODAL 8: ACCOUNT AUTHENTICATION MODAL -->
+    <div id="authModal" class="modal-overlay">
+      <div class="modal-card modal-sm">
+        <div class="modal-header">
+          <h3>Account Authentication</h3>
+          <button class="modal-close" onclick="hideModal('authModal')">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="auth-tabs">
+            <button class="auth-tab active" id="atabLogin" onclick="switchAuthMode('login')">Login</button>
+            <button class="auth-tab" id="atabRegister" onclick="switchAuthMode('register')">Register</button>
+          </div>
+
+          <div class="pill-selector">
+            <button class="pill-btn active" id="pillHost" onclick="selectAuthRole('host')">Host</button>
+            <button class="pill-btn" id="pillDev" onclick="selectAuthRole('developer')">Developer</button>
+          </div>
+
+          <div id="authErrorMsg" class="error-msg-box" style="display:none;"></div>
+
+          <form id="authForm" onsubmit="handleAuthSubmit(event)">
+            <div class="form-group" id="authNameGroup" style="display:none;">
+              <label>Full Name *</label>
+              <input type="text" id="authName" class="form-input" placeholder="e.g. John Doe"/>
+            </div>
+
+            <div class="form-group">
+              <label>Email Address *</label>
+              <input type="email" id="authEmail" class="form-input" placeholder="name@company.com" required/>
+            </div>
+
+            <div class="form-group">
+              <label>Password *</label>
+              <input type="password" id="authPassword" class="form-input" placeholder="••••••••" required minlength="6"/>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block margin-top" id="authSubmitBtn">
+              Login to Account
+            </button>
+          </form>
+
+          <div class="divider-text"><span>OR DEMO SHORTCUTS</span></div>
+
+          <div class="demo-btn-row">
+            <button class="btn btn-outline btn-block btn-sm" onclick="quickLoginDemo('host')">⚡ Demo Host</button>
+            <button class="btn btn-outline btn-block btn-sm" onclick="quickLoginDemo('developer')">⚡ Demo Developer</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SUBTLE TOAST CONTAINER -->
+    <div id="toastContainer" class="toast-container"></div>
+
+  </div>
+
+  <script src="app.js"></script>
+</body>
+</html>
